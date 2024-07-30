@@ -27,10 +27,11 @@ const Home = () => {
                 months: '4'
             }
         }
-    ]
+    ]    
 
     return <View>
         <Text>Home</Text>
+        <FlatList data={data} keyExtractor={item => item.plantId} ListEmptyComponent={<Text>Empty List</Text>} />
     </View>
 }
 
