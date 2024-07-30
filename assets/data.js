@@ -1,4 +1,4 @@
-export const data = [
+export const dataOriginal = [
   {
     plantId: '1',
     image:

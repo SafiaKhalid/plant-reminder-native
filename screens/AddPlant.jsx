@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { View, Text, Pressable, TextInput } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import { data } from '../assets/data'
 
-const AddPlant = ({ navigation }) => {
+const AddPlant = ({ route, navigation }) => {
+    const { data, setData } = route.params
+
     const [plant, setPlant] = useState({
         plantId: '',
+        image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         name:'',
         species: '',
         waterInterval: '',
@@ -33,10 +37,20 @@ const AddPlant = ({ navigation }) => {
             setAlert('Enter your plant\'s age')
         } else if (!parseInt(plant.age.months) && plant.age.months !== '') {
             setAlert('Enter your plant\'s age')
-        }
-        
-        else {
+        } else {
             setPlant({...plant, plantId:uuidv4()})
+            /* setData({...data, plant}) */
+            setPlant({
+                plantId: '',
+                name:'',
+                species: '',
+                waterInterval: '',
+                timeLeft: '',
+                age: {
+                    years: '',
+                    months: '',
+                },
+            })
             console.log(plant)
             setAlert('Submitted new plant!')
             setTimeout(() => {
