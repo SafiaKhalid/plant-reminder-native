@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, FlatList } from 'react-native'
+import PlantCard from "../components/PlantCard";
 
 const Home = () => {
     const data = [
@@ -31,7 +32,12 @@ const Home = () => {
 
     return <View>
         <Text>Home</Text>
-        <FlatList data={data} keyExtractor={item => item.plantId} ListEmptyComponent={<Text>Empty List</Text>} />
+        <FlatList 
+            data={data} 
+            renderItem={({item}) => <PlantCard image={item.image} name={item.name} species={item.species} timeLeft={item.timeLeft} />}
+            keyExtractor={item => item.plantId} 
+            ListEmptyComponent={<Text>Empty List</Text>} 
+        />
     </View>
 }
 
