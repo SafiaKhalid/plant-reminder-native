@@ -6,8 +6,8 @@ const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
     const [data, setData] = useState(dataOriginal)
-
-    return (<AppContext.Provider value= {{data, setData}}>        
+    
+    return (<AppContext.Provider value={{data, setData}}>        
         {children}
     </AppContext.Provider>)
 }
