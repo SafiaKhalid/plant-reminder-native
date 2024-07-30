@@ -1,38 +1,11 @@
 import React from "react";
 import { View, Text, FlatList, Pressable } from 'react-native'
 import PlantCard from "../components/PlantCard";
+import { data } from '../assets/data'
 
-const Home = ({ navigation }) => {
-    const data = [
-        {
-            plantId:'1',
-            image:'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            name:'Basil',
-            species:'Ocimum basilicum',
-            waterInterval:'20',
-            timeLeft: '13' ,
-            age: {
-            years: '2',
-            months: '3'
-            }
-        },
-        {
-            plantId:'2',
-            image:'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-            name:'Mint',
-            species:'Mentha piperita',
-            waterInterval:'3',
-            timeLeft: '1' ,
-            age: {
-                years: '1',
-                months: '4'
-            }
-        }
-    ]   
-    
+const Home = ({ navigation }) => {    
     const addPlantButton = () => {
-        navigation.navigate('Add Plant')
-        console.log('Add plant')
+        navigation.navigate('Add Plant')        
     }
 
     return <View>
