@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { dataOriginal } from './assets/data'
 import App from './App'
 
@@ -6,6 +7,16 @@ const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
     const [data, setData] = useState(dataOriginal)
+    const { getItem } = useAsyncStorage('data-key')
+
+    const readStorage = async () => {
+        const item = await getItem()
+        setData(item)
+    }
+
+    useEffect(() => {
+        readStorage()
+    }, [])
     
     return (<AppContext.Provider value={{data, setData}}>        
         {children}
