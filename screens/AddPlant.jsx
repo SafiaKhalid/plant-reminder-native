@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, TextInput } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { data } from '../assets/data'
+import { useGlobalContext } from "../context";
 
-const AddPlant = ({ route, navigation }) => {
-    const { data, setData } = route.params
+const AddPlant = ({ route, navigation }) => {  
+    const { data, setData } = useGlobalContext()    
 
     const [plant, setPlant] = useState({
-        plantId: '',
         image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
         name:'',
         species: '',
@@ -20,7 +19,19 @@ const AddPlant = ({ route, navigation }) => {
         },
     })
     const [alert, setAlert] = useState('')
-    const [validInput, setValidInput] = useState(false)
+    const [validInput, setValidInput] = useState(false)    
+    const [newPlant, setNewPlant] = useState({
+        id: '',
+        image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        name:'',
+        species: '',
+        waterInterval: '',
+        timeLeft: '',
+        age: {
+            years: '',
+            months: '',
+        },
+    })
 
     const backHomeButton = () => {
         navigation.navigate('Home')
@@ -37,11 +48,18 @@ const AddPlant = ({ route, navigation }) => {
             setAlert('Enter your plant\'s age')
         } else if (!parseInt(plant.age.months) && plant.age.months !== '') {
             setAlert('Enter your plant\'s age')
-        } else {
-            setPlant({...plant, plantId:uuidv4()})
-            /* setData({...data, plant}) */
+        } else {                           
+            setNewPlant({
+                plantId: uuidv4(),
+                image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                name: plant.name,
+                species: plant.species,
+                waterInterval: plant.waterInterval,
+                timeLeft: (plant.timeLeft ? plant.timeLeft : '0'),
+                age: plant.age
+            })               
             setPlant({
-                plantId: '',
+               image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
                 name:'',
                 species: '',
                 waterInterval: '',
@@ -49,15 +67,22 @@ const AddPlant = ({ route, navigation }) => {
                 age: {
                     years: '',
                     months: '',
-                },
-            })
-            console.log(plant)
+                }, 
+            })                 
+            setValidInput(true)    
             setAlert('Submitted new plant!')
             setTimeout(() => {
                     setAlert('')
             }, 5000)
         }        
-    }
+    }    
+
+    useEffect(() => {
+        if (validInput == true) {
+            setData([...data, newPlant])                        
+            setValidInput(false)                       
+        }        
+    }, [newPlant])
 
     return <View>
         <Pressable onPress={backHomeButton}>
@@ -131,3 +156,6 @@ const AddPlant = ({ route, navigation }) => {
 }
 
 export default AddPlant
+
+//Set newPlant to plant info
+//push newPlant to data

@@ -4,9 +4,7 @@ import PlantCard from "../components/PlantCard";
 import { useGlobalContext } from "../context";
 
 const Home = ({ navigation }) => {
-    const { data, setData } = useGlobalContext()
-    
-    const dataEmpty = []
+    const { data } = useGlobalContext()    
 
     const addPlantButton = () => {
         navigation.navigate('Add Plant')        
