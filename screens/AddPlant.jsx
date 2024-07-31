@@ -4,7 +4,7 @@ import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { useGlobalContext } from "../context";
 
-const AddPlant = ({ route, navigation }) => {  
+const AddPlant = ({ navigation }) => {  
     const { data, setData } = useGlobalContext()    
 
     const [plant, setPlant] = useState({
