@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, TextInput } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { useGlobalContext } from "../context";
 
 const AddPlant = ({ navigation }) => {  

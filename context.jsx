@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useAsyncStorage } from '@react-native-async-storage/async-storage'
-import { dataOriginal } from './assets/data'
-import App from './App'
 
 const AppContext = React.createContext()
 
