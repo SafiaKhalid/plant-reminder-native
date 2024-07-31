@@ -6,8 +6,7 @@ import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { useGlobalContext } from "../context";
 
 const AddPlant = ({ navigation }) => {  
-    const { data, setData } = useGlobalContext()   
-    const { setItem } = useAsyncStorage('data-key') 
+    const { data, setData, setItem } = useGlobalContext()       
 
     const [plant, setPlant] = useState({
         image: '',

@@ -7,7 +7,7 @@ const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
     const [data, setData] = useState(/* dataOriginal */ {})
-    const { getItem } = useAsyncStorage('data-key')
+    const { setItem, getItem } = useAsyncStorage('data-key')
 
     const readStorage = async () => {
         const item = await getItem()
@@ -20,7 +20,7 @@ const AppProvider = ({ children }) => {
         readStorage()
     }, [])
     
-    return (<AppContext.Provider value={{data, setData}}>        
+    return (<AppContext.Provider value={{data, setData, setItem, getItem}}>        
         {children}
     </AppContext.Provider>)
 }
