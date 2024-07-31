@@ -8,8 +8,9 @@ const AppProvider = ({ children }) => {
     const [date, setDate] = useState({
         old: '',
         new: ''
-    })
-    const { setItem, getItem } = useAsyncStorage('data-key')
+    })    
+    const [dateDifference, setDateDifference] = useState(null)
+    const { setItem, getItem } = useAsyncStorage('data-key')    
 
     const currentFullDate = new Date()
     const currentDate = currentFullDate.getDate().toString()
@@ -18,8 +19,7 @@ const AppProvider = ({ children }) => {
 
     const setDateStorage = async (inputDate) => {
         try {
-            await AsyncStorage.setItem('date-key', inputDate)
-            console.log('stored date: ', inputDate);
+            await AsyncStorage.setItem('date-key', inputDate)            
         } catch (error) {
             console.log(error)
         }
@@ -31,9 +31,7 @@ const AppProvider = ({ children }) => {
             if (!newDate) {
                 setDateStorage(currentDate)                                            
             }
-            setDate({old:(newDate ? newDate : currentDate), new: currentDate})
-            console.log('date state object: ', date);
-            console.log('newDate: ', newDate);
+            setDate({old:(newDate ? newDate : currentDate), new: currentDate})            
         } catch (error) {
             console.log(error);
         }
@@ -56,6 +54,7 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         readDateStorage()                 
         /* removeDateStorage() */
+        setDateDifference((date.old>date.new ? ((date.new+date.old)-date.old) : (date.new-date.old) ))
         readStorage()
     }, [])
 
@@ -63,7 +62,7 @@ const AppProvider = ({ children }) => {
         console.log('useEffect date state: ', date)
     }, [date])
     
-    return (<AppContext.Provider value={{data, setData, setItem, getItem}}>        
+    return (<AppContext.Provider value={{data, setData, setItem, getItem, dateDifference}}>        
         {children}
     </AppContext.Provider>)
 }
