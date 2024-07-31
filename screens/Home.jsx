@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Text, FlatList, Pressable } from 'react-native'
 import PlantCard from "../components/PlantCard";
 import { useGlobalContext } from "../context";
@@ -6,8 +7,19 @@ import { useGlobalContext } from "../context";
 const Home = ({ navigation }) => {
     const { data } = useGlobalContext()    
 
+    console.log('data(Home): ', data);
+
     const addPlantButton = () => {
         navigation.navigate('Add Plant')        
+    }
+
+    const clearStorage = async () => {
+        try {
+            await AsyncStorage.clear()
+        } catch (e) {
+            console.log(e);
+        }
+        console.log('Storage cleared');
     }
 
     return <View>
@@ -21,6 +33,9 @@ const Home = ({ navigation }) => {
             keyExtractor={item => item.plantId} 
             ListEmptyComponent={<Text>Empty List</Text>} 
         />
+        <Pressable onPress={clearStorage}>
+            <Text>Clear Storage</Text>
+        </Pressable>
     </View>
 }
 
