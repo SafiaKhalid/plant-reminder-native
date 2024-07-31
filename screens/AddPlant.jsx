@@ -2,15 +2,13 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, TextInput } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { useGlobalContext } from "../context";
 
 const AddPlant = ({ navigation }) => {  
-    const { data, setData } = useGlobalContext()   
-    const { setItem } = useAsyncStorage('data-key') 
+    const { data, setData, setItem } = useGlobalContext()       
 
     const [plant, setPlant] = useState({
-        image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        image: '',
         name:'',
         species: '',
         waterInterval: '',
@@ -24,7 +22,7 @@ const AddPlant = ({ navigation }) => {
     const [validInput, setValidInput] = useState(false)    
     const [newPlant, setNewPlant] = useState({
         id: '',
-        image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+        image: '',
         name:'',
         species: '',
         waterInterval: '',
@@ -36,8 +34,7 @@ const AddPlant = ({ navigation }) => {
     })    
 
     const writeStorage = async newData => {
-        await setItem(JSON.stringify([...data, newData]))
-        console.log('setItem: ', [...data, newData])
+        await setItem(JSON.stringify([...data, newData]))        
         setData([...data, newData])
     }
 
@@ -59,7 +56,7 @@ const AddPlant = ({ navigation }) => {
         } else {                           
             setNewPlant({
                 plantId: uuidv4(),
-                image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                image: '',
                 name: plant.name,
                 species: plant.species,
                 waterInterval: plant.waterInterval,
@@ -67,7 +64,7 @@ const AddPlant = ({ navigation }) => {
                 age: plant.age
             })               
             setPlant({
-                image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                image: '',
                 name:'',
                 species: '',
                 waterInterval: '',
@@ -86,8 +83,7 @@ const AddPlant = ({ navigation }) => {
     }    
 
     useEffect(() => {
-        if (validInput == true) {
-            /* setData([...data, newPlant]) */                        
+        if (validInput == true) {                            
             writeStorage(newPlant)
             setValidInput(false)                       
         }        
@@ -165,6 +161,3 @@ const AddPlant = ({ navigation }) => {
 }
 
 export default AddPlant
-
-//Set newPlant to plant info
-//push newPlant to data

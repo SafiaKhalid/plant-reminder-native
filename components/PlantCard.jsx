@@ -1,12 +1,21 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const PlantCard = ({image, name, species, timeLeft}) => {
+const PlantCard = ({image, name, species, waterInterval, timeLeft}) => {
+    const waterPlant = () => {
+        console.log('water plant');
+    }
+
     return <View>
-        <Image source={{uri:image}} style={styles.image} />
+        {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
         <Text>Name: {name}</Text>
-        <Text>Species: {species}</Text>
+        {species !== '' && <Text>Species: {species}</Text>}
         <Text>Time left: {timeLeft}</Text>
+        <Pressable onPress={waterPlant}>
+            <Ionicons name="water" size={40} color="blue" />
+        </Pressable>        
     </View>
 }
 
@@ -16,8 +25,21 @@ const styles = StyleSheet.create({
         width: 100,
         borderRadius: 50,
         borderWidth: 5,
-        marginRight: 10,
+        borderColor: 'green',
+        marginRight: 10,        
+        alignItems: 'center',
+        justifyContent: 'center',        
     }
 })
 
 export default PlantCard
+
+//Information for card:
+//Image
+//Name
+//Species
+//Days left
+//Status icon
+//Water button
+
+//Find a way to update time left to equal water interval when press water button (make new branch?)
