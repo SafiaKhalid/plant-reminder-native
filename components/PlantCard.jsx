@@ -1,13 +1,21 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
-const PlantCard = ({image, name, species, timeLeft}) => {
+const PlantCard = ({image, name, species, waterInterval, timeLeft}) => {
+    const waterPlant = () => {
+        console.log('water plant');
+    }
+
     return <View>
         {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
         <Text>Name: {name}</Text>
         {species !== '' && <Text>Species: {species}</Text>}
-        <Text>Time left: {timeLeft}</Text>        
+        <Text>Time left: {timeLeft}</Text>
+        <Pressable onPress={waterPlant}>
+            <Ionicons name="water" size={40} color="blue" />
+        </Pressable>        
     </View>
 }
 
