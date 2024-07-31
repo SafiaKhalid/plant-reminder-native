@@ -9,9 +9,7 @@ const AppProvider = ({ children }) => {
 
     const readStorage = async () => {
         const item = await getItem()
-        setData(JSON.parse(item) ? [...(JSON.parse(item))] : [] )
-        console.log('data: ', [...(JSON.parse(item))])
-        console.log('item: ', item);
+        setData(JSON.parse(item) ? [...(JSON.parse(item))] : [] )        
     }
 
     useEffect(() => {
