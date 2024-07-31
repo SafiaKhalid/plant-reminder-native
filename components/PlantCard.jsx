@@ -41,3 +41,5 @@ export default PlantCard
 //Days left
 //Status icon
 //Water button
+
+//Find a way to update time left to equal water interval when press water button (make new branch?)
