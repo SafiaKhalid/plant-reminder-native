@@ -6,12 +6,14 @@ import App from './App'
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
-    const [data, setData] = useState(dataOriginal)
+    const [data, setData] = useState(/* dataOriginal */ {})
     const { getItem } = useAsyncStorage('data-key')
 
     const readStorage = async () => {
         const item = await getItem()
-        setData(item)
+        setData(JSON.parse(item) ? [...(JSON.parse(item))] : [] )
+        console.log('data: ', [...(JSON.parse(item))])
+        console.log('item: ', item);
     }
 
     useEffect(() => {

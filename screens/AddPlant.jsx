@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { View, Text, Pressable, TextInput } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage'
 import { useGlobalContext } from "../context";
 
 const AddPlant = ({ navigation }) => {  
-    const { data, setData } = useGlobalContext()    
+    const { data, setData } = useGlobalContext()   
+    const { setItem } = useAsyncStorage('data-key') 
 
     const [plant, setPlant] = useState({
         image: 'https://images.pexels.com/photos/1974508/pexels-photo-1974508.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -31,7 +33,13 @@ const AddPlant = ({ navigation }) => {
             years: '',
             months: '',
         },
-    })
+    })    
+
+    const writeStorage = async newData => {
+        await setItem(JSON.stringify([...data, newData]))
+        console.log('setItem: ', [...data, newData])
+        setData([...data, newData])
+    }
 
     const backHomeButton = () => {
         navigation.navigate('Home')
@@ -79,7 +87,8 @@ const AddPlant = ({ navigation }) => {
 
     useEffect(() => {
         if (validInput == true) {
-            setData([...data, newPlant])                        
+            /* setData([...data, newPlant]) */                        
+            writeStorage(newPlant)
             setValidInput(false)                       
         }        
     }, [newPlant])
