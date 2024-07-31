@@ -63,7 +63,7 @@ const AddPlant = ({ navigation }) => {
                 name: plant.name,
                 species: plant.species,
                 waterInterval: plant.waterInterval,
-                timeLeft: (plant.timeLeft ? plant.timeLeft : '0'),
+                timeLeft: (plant.timeLeft ? plant.timeLeft : plant.waterInterval),
                 age: plant.age
             })               
             setPlant({
