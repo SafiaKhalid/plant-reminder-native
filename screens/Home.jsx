@@ -18,8 +18,7 @@ const Home = ({ navigation }) => {
             await AsyncStorage.clear()
         } catch (e) {
             console.log(e);
-        }
-        console.log('Storage cleared');
+        }        
     }
 
     return <View>
