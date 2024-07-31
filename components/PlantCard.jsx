@@ -6,7 +6,7 @@ const PlantCard = ({image, name, species, timeLeft}) => {
     return <View>
         {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
         <Text>Name: {name}</Text>
-        <Text>Species: {species}</Text>
+        {species !== '' && <Text>Species: {species}</Text>}
         <Text>Time left: {timeLeft}</Text>        
     </View>
 }
