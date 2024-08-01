@@ -36,9 +36,22 @@ const AppProvider = ({ children }) => {
         }
     }
 
+    const checkTimeElapsed = (time) => {
+        if ((time.parse() >= 86400000) && (data.length > 0)) {
+            let newTimeData = data
+            newTimeData.forEach(item => {
+                if (item.timeLeft > 0) {
+                    item.timeLeft = item.timeLeft-1
+                }
+            })
+            setData(newTimeData)
+        }
+    }
+
     const readStorage = async () => {
         const item = await getItem()
-        setData(JSON.parse(item) ? [...(JSON.parse(item))] : [] )        
+        setData(JSON.parse(item) ? [...(JSON.parse(item))] : [] )
+        checkTimeElapsed(dateDifference)                
     }
 
     const removeDateStorage = async () => {
