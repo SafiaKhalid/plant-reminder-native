@@ -34,15 +34,37 @@ const AppProvider = ({ children }) => {
         }
     }
 
-    const checkTimeElapsed = (time) => {
-        if ((JSON.parse(time) >= 86400000) && (data.length > 0)) {
+    const checkTimeElapsed = (time) => {                              
+        if (data.length > 0) {
+            const oldDate = new Date(JSON.parse(date.old))
+            const newDate = new Date(JSON.parse(date.new))
             let newTimeData = data
-            newTimeData.forEach(item => {
-                if (item.timeLeft > 0) {
-                    item.timeLeft = item.timeLeft-1
+
+            if (JSON.parse(time) >= 86400000) {
+                const daysDifference = Math.floor(JSON.parse(time) / (1000 * 60 * 60 * 24))
+
+                newTimeData.forEach(item => {
+                if (JSON.parse(item.timeLeft) > 0) {
+                    item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()
+                    if (JSON.parse(item.timeLeft) < 0) {
+                        item.time = '0'
+                    }
                 }
-            })
-            setData(newTimeData)
+                })
+                setData(newTimeData)
+            } else if (oldDate.getDate() !== newDate.getDate()) {
+                const daysDifference = Math.abs(oldDate.getDate() - newDate.getDate())
+
+                newTimeData.forEach(item => {
+                if (JSON.parse(item.timeLeft) > 0) {
+                    item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()
+                    if (JSON.parse(item.timeLeft) < 0) {
+                        item.time = '0'
+                    }
+                }
+                })
+                setData(newTimeData)
+            }
         }
     }
 
@@ -78,6 +100,3 @@ const useGlobalContext = () => {
 }
 
 export { AppContext, AppProvider, useGlobalContext }
-
-// Change date to include months and years (doesnt calculate if more than a month passed between renders)
-// Date currently can only be max 31, gives inaccurate date differences if more than a month between renders
