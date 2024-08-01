@@ -11,10 +11,9 @@ const AppProvider = ({ children }) => {
     })    
     const [dateDifference, setDateDifference] = useState(null)
     const { setItem, getItem } = useAsyncStorage('data-key')    
-
-    const currentFullDate = new Date()
-    const currentDate = currentFullDate.getDate().toString()
     
+    const currentDate = Date.now().toString()
+
     console.log('Current day: ', currentDate)
 
     const setDateStorage = async (inputDate) => {
@@ -54,14 +53,19 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         readDateStorage()                 
         /* removeDateStorage() */
-        setDateDifference((date.old>date.new ? ((date.new+date.old)-date.old) : (date.new-date.old) ))
+        setDateDifference(date.new-date.old)
         readStorage()
     }, [])
 
     useEffect(() => {
         console.log('useEffect date state: ', date)
+        console.log('useEffect dateDifference state: ', dateDifference)
     }, [date])
     
+    useEffect(() => {
+        console.log('useEffect dateDifference state: ', dateDifference)
+    }, [dateDifference])
+
     return (<AppContext.Provider value={{data, setData, setItem, getItem, dateDifference}}>        
         {children}
     </AppContext.Provider>)
@@ -72,3 +76,6 @@ const useGlobalContext = () => {
 }
 
 export { AppContext, AppProvider, useGlobalContext }
+
+// Change date to include months and years (doesnt calculate if more than a month passed between renders)
+// Date currently can only be max 31, gives inaccurate date differences if more than a month between renders
