@@ -57,15 +57,6 @@ const AppProvider = ({ children }) => {
         readStorage()
     }, [])
 
-    useEffect(() => {
-        console.log('useEffect date state: ', date)
-        console.log('useEffect dateDifference state: ', dateDifference)
-    }, [date])
-    
-    useEffect(() => {
-        console.log('useEffect dateDifference state: ', dateDifference)
-    }, [dateDifference])
-
     return (<AppContext.Provider value={{data, setData, setItem, getItem, dateDifference}}>        
         {children}
     </AppContext.Provider>)
