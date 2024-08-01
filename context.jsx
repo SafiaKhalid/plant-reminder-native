@@ -54,10 +54,7 @@ const AppProvider = ({ children }) => {
                         item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()                    
                     }
 
-                    if (JSON.parse(item.timeLeft) < 0) {
-                        console.log('Less than 0');
-                        console.log('Parsed timeLeft: ', JSON.parse(item.timeLeft));
-                        console.log(item);
+                    if (JSON.parse(item.timeLeft) < 0) {                        
                         item.timeLeft = '0'
                     }
                 })                
@@ -70,20 +67,11 @@ const AppProvider = ({ children }) => {
                         item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()                        
                     }
 
-                    if (JSON.parse(item.timeLeft) < 0) {
-                        console.log('Less than 0');
-                        console.log('Parsed timeLeft: ', JSON.parse(item.timeLeft));
-                        console.log(item);
+                    if (JSON.parse(item.timeLeft) < 0) {                        
                         item.timeLeft = '0'                        
                     }
                 })                
                 writeStorage(newTimeData)
-
-
-     /*            const writeStorage = async newData => {
-                    await setItem(JSON.stringify([...data, newData]))        
-                    setData([...data, newData])
-                } */
             }
         }
     }
