@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage'
-import MockDate from 'mockdate'
+/* import MockDate from 'mockdate' */
 
 const AppContext = React.createContext()
 
@@ -35,6 +35,11 @@ const AppProvider = ({ children }) => {
         }
     }
 
+    const writeStorage = async newData => {
+        await setItem(JSON.stringify(newData))        
+        setData(newData)
+    }
+
     const checkTimeElapsed = (time) => {                              
         if (data.length > 0) {
             const oldDate = new Date(JSON.parse(date.old))
@@ -45,26 +50,40 @@ const AppProvider = ({ children }) => {
                 const daysDifference = Math.floor(JSON.parse(time) / (1000 * 60 * 60 * 24))
 
                 newTimeData.forEach(item => {
-                if (JSON.parse(item.timeLeft) > 0) {
-                    item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()
-                    if (JSON.parse(item.timeLeft) < 0) {
-                        item.time = '0'
+                    if (JSON.parse(item.timeLeft) > 0) {
+                        item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()                    
                     }
-                }
-                })
-                setData(newTimeData)
+
+                    if (JSON.parse(item.timeLeft) < 0) {
+                        console.log('Less than 0');
+                        console.log('Parsed timeLeft: ', JSON.parse(item.timeLeft));
+                        console.log(item);
+                        item.timeLeft = '0'
+                    }
+                })                
+                writeStorage(newTimeData)
             } else if (oldDate.getDate() !== newDate.getDate()) {
                 const daysDifference = Math.abs(oldDate.getDate() - newDate.getDate())
 
                 newTimeData.forEach(item => {
-                if (JSON.parse(item.timeLeft) > 0) {
-                    item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()
-                    if (JSON.parse(item.timeLeft) < 0) {
-                        item.time = '0'
+                    if (JSON.parse(item.timeLeft) > 0) {
+                        item.timeLeft = (JSON.parse(item.timeLeft)-daysDifference).toString()                        
                     }
-                }
-                })
-                setData(newTimeData)
+
+                    if (JSON.parse(item.timeLeft) < 0) {
+                        console.log('Less than 0');
+                        console.log('Parsed timeLeft: ', JSON.parse(item.timeLeft));
+                        console.log(item);
+                        item.timeLeft = '0'                        
+                    }
+                })                
+                writeStorage(newTimeData)
+
+
+     /*            const writeStorage = async newData => {
+                    await setItem(JSON.stringify([...data, newData]))        
+                    setData([...data, newData])
+                } */
             }
         }
     }
@@ -91,6 +110,10 @@ const AppProvider = ({ children }) => {
         readStorage()
     }, [])
 
+    useEffect(() => {
+        console.log('data changed: ', data);
+    }, [data])
+
     return (<AppContext.Provider value={{data, setData, setItem, getItem, dateDifference}}>        
         {children}
     </AppContext.Provider>)
@@ -101,5 +124,3 @@ const useGlobalContext = () => {
 }
 
 export { AppContext, AppProvider, useGlobalContext }
-
-//Use mockdate to check date testing

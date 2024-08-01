@@ -24,15 +24,15 @@ const Home = ({ navigation }) => {
         <Pressable onPress={addPlantButton}>
             <Text>Add Plant</Text>
         </Pressable>
+        <Pressable onPress={clearStorage}>
+            <Text>Clear Storage</Text>
+        </Pressable>
         <FlatList 
             data={data} 
             renderItem={({item}) => <PlantCard image={item.image} name={item.name} species={item.species} waterInterval={item.waterInterval} timeLeft={item.timeLeft} />}
             keyExtractor={item => item.plantId} 
             ListEmptyComponent={<Text>Empty List</Text>} 
-        />
-        <Pressable onPress={clearStorage}>
-            <Text>Clear Storage</Text>
-        </Pressable>
+        />        
     </View>
 }
 
