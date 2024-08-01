@@ -37,7 +37,7 @@ const AppProvider = ({ children }) => {
     }
 
     const checkTimeElapsed = (time) => {
-        if ((time.parse() >= 86400000) && (data.length > 0)) {
+        if ((JSON.parse(time) >= 86400000) && (data.length > 0)) {
             let newTimeData = data
             newTimeData.forEach(item => {
                 if (item.timeLeft > 0) {
