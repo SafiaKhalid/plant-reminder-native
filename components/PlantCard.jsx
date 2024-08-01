@@ -8,17 +8,11 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
     const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
 
-    const waterPlant = () => {
-        console.log('water plant');
-        console.log('dataCopy: ', dataCopy);
-        dataCopy.forEach(item => {
-            console.log('Item id: ', item.plantId);
-        });        
+    const waterPlant = () => {        
         setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))        
     }
 
-    useEffect(() => {
-        console.log('Changed dataCopy: ',dataCopy);
+    useEffect(() => {        
         setData(dataCopy)    
         writeStorage(dataCopy)    
     }, [dataCopy])
