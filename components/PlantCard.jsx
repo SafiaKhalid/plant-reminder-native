@@ -2,10 +2,27 @@ import React from 'react'
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useGlobalContext } from "../context";
 
-const PlantCard = ({image, name, species, waterInterval, timeLeft}) => {
+const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
+    const { data } = useGlobalContext()    
+
+    const dataCopy = data
+
     const waterPlant = () => {
         console.log('water plant');
+        console.log('dataCopy: ', dataCopy);
+        dataCopy.forEach(item => {
+            console.log('Item id: ', item.plantId);
+        });
+        console.log(id);
+        const indexItem = dataCopy.findIndex(item => item.plantId == id)
+        console.log(indexItem);
+        /* const indexItem =  */
+        /* console.log(dataCopy.findIndex(item => {
+
+            item.plantId = id
+        })); */
     }
 
     return <View>
