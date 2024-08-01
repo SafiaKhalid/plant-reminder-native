@@ -12,9 +12,7 @@ const AppProvider = ({ children }) => {
     const [dateDifference, setDateDifference] = useState(null)
     const { setItem, getItem } = useAsyncStorage('data-key')    
     
-    const currentDate = Date.now().toString()
-
-    console.log('Current day: ', currentDate)
+    const currentDate = Date.now().toString()    
 
     const setDateStorage = async (inputDate) => {
         try {
