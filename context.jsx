@@ -102,7 +102,7 @@ const AppProvider = ({ children }) => {
         console.log('data changed: ', data);
     }, [data])
 
-    return (<AppContext.Provider value={{data, setData, setItem, getItem, dateDifference}}>        
+    return (<AppContext.Provider value={{data, setData, setItem, getItem, writeStorage, dateDifference}}>        
         {children}
     </AppContext.Provider>)
 }

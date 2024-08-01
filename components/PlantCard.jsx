@@ -5,7 +5,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { useGlobalContext } from "../context";
 
 const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {    
-    const { data, setData } = useGlobalContext()    
+    const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
 
     const waterPlant = () => {
@@ -19,7 +19,8 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
 
     useEffect(() => {
         console.log('Changed dataCopy: ',dataCopy);
-        setData(dataCopy)        
+        setData(dataCopy)    
+        writeStorage(dataCopy)    
     }, [dataCopy])
 
     return <View>
@@ -56,4 +57,4 @@ export default PlantCard
 //Status icon
 //Water button
 
-//Find a way to update time left to equal water interval when press water button (make new branch?)
+//Alert when water plant displayed?
