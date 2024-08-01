@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage'
+import MockDate from 'mockdate'
 
 const AppContext = React.createContext()
 
@@ -100,3 +101,5 @@ const useGlobalContext = () => {
 }
 
 export { AppContext, AppProvider, useGlobalContext }
+
+//Use mockdate to check date testing
