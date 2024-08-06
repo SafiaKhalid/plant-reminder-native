@@ -65,7 +65,6 @@ export default PlantCard
 //Status icon
 //Water button
 
-//Remove water button when timeLeft = waterInterval
 
 //Next branch - display message when list empty on Home screen
 //Branch - icons reflecting timeLeft (happy, sad, angry etc?)
