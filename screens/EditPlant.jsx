@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, Pressable } from 'react-native';
 import { useGlobalContext } from "../context";
 
 const EditPlant = ({route, navigation}) => {
     const {id} = route.params
-    const { data } = useGlobalContext()
+    const { data, setData, writeStorage } = useGlobalContext()
 
     const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
     const [alert, setAlert] = useState('')
+    const [dataCopy, setDataCopy] = useState(data)
 
     console.log('plant: ', plant);
     
@@ -29,8 +30,20 @@ const EditPlant = ({route, navigation}) => {
             setAlert('Enter your plant\'s age')
         } else if (!parseInt(plant.age.months) && plant.age.months !== '') {
             setAlert('Enter your plant\'s age')
+        } else {
+            setDataCopy(dataCopy.map(item => item.plantId == id ? plant : item))
+            setAlert('Youv\'e editted your plant!')
+            setTimeout(() => {
+                    setAlert('')
+            }, 5000)
         }
     }
+
+    useEffect(() => {
+        console.log('dataCopy: ',dataCopy);
+        setData(dataCopy)
+        writeStorage(dataCopy)
+    }, [dataCopy])
 
     return <View>             
         <Pressable onPress={goBack}>
