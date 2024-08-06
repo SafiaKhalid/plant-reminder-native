@@ -7,15 +7,25 @@ import { useGlobalContext } from "../context";
 const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {    
     const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
+    const [waterAlert, setWaterAlert] = useState(false)
 
     const waterPlant = () => {        
-        setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))        
+        setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))   
+        setWaterAlert(true)     
     }
 
     useEffect(() => {        
         setData(dataCopy)    
         writeStorage(dataCopy)    
     }, [dataCopy])
+
+    useEffect(() => {
+        if (waterAlert) {
+            setTimeout(() => {
+                setWaterAlert(false)
+            }, 2000)
+        }
+    }, [waterAlert])
 
     return <View>
         {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
@@ -24,7 +34,8 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         <Text>Time left: {timeLeft}</Text>
         <Pressable onPress={waterPlant}>
             <Ionicons name="water" size={40} color="blue" />
-        </Pressable>        
+        </Pressable>    
+        {waterAlert && <Text>Plant watered!</Text>}    
     </View>
 }
 
@@ -52,3 +63,11 @@ export default PlantCard
 //Water button
 
 //Alert when water plant displayed?
+//Remove water button when timeLeft = waterInterval
+
+//Next branch - display message when list empty on Home screen
+//Branch - icons reflecting timeLeft (happy, sad, angry etc?)
+//Branch - edit plantCard (make sure info copied into text inputs)
+//Branch - delete plant card (are you sure modal)
+//Branch - add image to plant card
+//Branch - order plant card list (time left to water?)
