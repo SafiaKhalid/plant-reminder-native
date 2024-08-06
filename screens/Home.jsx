@@ -31,7 +31,7 @@ const Home = ({ navigation }) => {
             data={data} 
             renderItem={({item}) => <PlantCard id={item.plantId} image={item.image} name={item.name} species={item.species} waterInterval={item.waterInterval} timeLeft={item.timeLeft} />}
             keyExtractor={item => item.plantId} 
-            ListEmptyComponent={<Text>Empty List</Text>} 
+            ListEmptyComponent={<Text>You haven't added any plants yet :({'\n'}Press the 'Add Plant' button above to get started!</Text>} 
         />        
     </View>
 }
