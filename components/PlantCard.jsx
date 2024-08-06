@@ -32,9 +32,12 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         <Text>Name: {name}</Text>
         {species !== '' && <Text>Species: {species}</Text>}
         <Text>Time left: {timeLeft}</Text>
+        {timeLeft===waterInterval ? 
+        <Ionicons name="water" size={40} color="grey" /> : 
         <Pressable onPress={waterPlant}>
             <Ionicons name="water" size={40} color="blue" />
-        </Pressable>    
+        </Pressable>}
+        
         {waterAlert && <Text>Plant watered!</Text>}    
     </View>
 }
@@ -62,7 +65,6 @@ export default PlantCard
 //Status icon
 //Water button
 
-//Alert when water plant displayed?
 //Remove water button when timeLeft = waterInterval
 
 //Next branch - display message when list empty on Home screen
