@@ -30,7 +30,6 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
     }, [waterAlert])
 
     useEffect(() => {
-        console.log('icon');
         if (timeLeft===waterInterval) {
             setPlantIcon(<FontAwesome6 name="face-grin-squint" size={24} color="darkgreen" />)
         } else if (timeLeft == 0) {
@@ -80,7 +79,6 @@ export default PlantCard
 //Water button
 
 
-//Branch - icons reflecting timeLeft (happy, sad, angry etc?)
 //Branch - edit plantCard (make sure info copied into text inputs)
 //Branch - delete plant card (are you sure modal)
 //Branch - add image to plant card
