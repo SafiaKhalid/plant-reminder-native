@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, Pressable } from 'react-native';
+import { useGlobalContext } from "../context";
 
 const EditPlant = ({route, navigation}) => {
     const {id} = route.params
+    const { data } = useGlobalContext()
 
-    console.log(id);
+    const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
+
+    console.log('plant: ', plant);
+    
+    console.log('id: ', id);
     
 
     const goBack = () => {
