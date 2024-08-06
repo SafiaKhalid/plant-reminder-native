@@ -85,7 +85,7 @@ export default PlantCard
 //Water button
 
 
-//Branch - delete plant card (are you sure modal)
+//Branch - delete plant card (are you sure modal, add to edit plant screen)
 //Branch - add image to plant card
 //Branch - order plant card list (time left to water?)
 //Branch - notifications
