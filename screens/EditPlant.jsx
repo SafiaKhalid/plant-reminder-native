@@ -1,7 +1,12 @@
 import React from "react";
 import { View, Text, Pressable } from 'react-native';
 
-const EditPlant = ({navigation}) => {
+const EditPlant = ({route, navigation}) => {
+    const {id} = route.params
+
+    console.log(id);
+    
+
     const goBack = () => {
         navigation.goBack()
     }

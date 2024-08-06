@@ -17,7 +17,7 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft, navigatio
     }
 
     const editPlantButton = () => {
-        navigation.navigate('Edit Plant')        
+        navigation.navigate('Edit Plant', {id:id})        
     }
 
     useEffect(() => {        
