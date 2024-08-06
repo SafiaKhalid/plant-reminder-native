@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useGlobalContext } from "../context";
 
@@ -32,6 +33,7 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         <Text>Name: {name}</Text>
         {species !== '' && <Text>Species: {species}</Text>}
         <Text>Time left: {timeLeft}</Text>
+        <FontAwesome6 name="face-grin-squint" size={24} color="black" />
         {timeLeft===waterInterval ? 
         <Ionicons name="water" size={40} color="grey" /> : 
         <Pressable onPress={waterPlant}>
@@ -66,7 +68,6 @@ export default PlantCard
 //Water button
 
 
-//Next branch - display message when list empty on Home screen
 //Branch - icons reflecting timeLeft (happy, sad, angry etc?)
 //Branch - edit plantCard (make sure info copied into text inputs)
 //Branch - delete plant card (are you sure modal)
