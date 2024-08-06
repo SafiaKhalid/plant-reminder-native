@@ -9,6 +9,7 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
     const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
     const [waterAlert, setWaterAlert] = useState(false)
+    const [plantIcon, setPlantIcon] = useState('')
 
     const waterPlant = () => {        
         setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))   
