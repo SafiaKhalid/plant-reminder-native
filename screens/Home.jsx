@@ -29,7 +29,7 @@ const Home = ({ navigation }) => {
         </Pressable>
         <FlatList 
             data={data} 
-            renderItem={({item}) => <PlantCard image={item.image} name={item.name} species={item.species} waterInterval={item.waterInterval} timeLeft={item.timeLeft} />}
+            renderItem={({item}) => <PlantCard id={item.plantId} image={item.image} name={item.name} species={item.species} waterInterval={item.waterInterval} timeLeft={item.timeLeft} />}
             keyExtractor={item => item.plantId} 
             ListEmptyComponent={<Text>Empty List</Text>} 
         />        

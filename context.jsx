@@ -96,13 +96,9 @@ const AppProvider = ({ children }) => {
         /* removeDateStorage() */
         setDateDifference(date.new-date.old)
         readStorage()
-    }, [])
+    }, [])    
 
-    useEffect(() => {
-        console.log('data changed: ', data);
-    }, [data])
-
-    return (<AppContext.Provider value={{data, setData, setItem, getItem, dateDifference}}>        
+    return (<AppContext.Provider value={{data, setData, setItem, getItem, writeStorage, dateDifference}}>        
         {children}
     </AppContext.Provider>)
 }
