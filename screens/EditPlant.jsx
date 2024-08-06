@@ -28,7 +28,7 @@ const EditPlant = ({route, navigation}) => {
             setAlert('Enter your plant\'s age')
         } else {
             setDataCopy(dataCopy.map(item => item.plantId == id ? plant : item))
-            setAlert('Youv\'e editted your plant!')
+            setAlert('Youv\'e edited your plant!')
             setTimeout(() => {
                     setAlert('')
             }, 5000)
