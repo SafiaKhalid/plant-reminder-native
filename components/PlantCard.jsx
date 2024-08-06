@@ -5,7 +5,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useGlobalContext } from "../context";
 
-const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {    
+const PlantCard = ({id, image, name, species, waterInterval, timeLeft, navigation}) => {    
     const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
     const [waterAlert, setWaterAlert] = useState(false)
@@ -14,6 +14,10 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
     const waterPlant = () => {        
         setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))   
         setWaterAlert(true)     
+    }
+
+    const editPlantButton = () => {
+        navigation.navigate('Edit Plant')        
     }
 
     useEffect(() => {        
@@ -50,7 +54,7 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         <Pressable onPress={waterPlant}>
             <Ionicons name="water" size={40} color="blue" />
         </Pressable>}
-        <Pressable onPress={() => console.log('edit')}>
+        <Pressable onPress={editPlantButton}>
             <Text>Edit</Text>
         </Pressable>
         {waterAlert && <Text>Plant watered!</Text>}    

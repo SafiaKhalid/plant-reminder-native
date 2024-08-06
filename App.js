@@ -7,6 +7,7 @@ import { AppProvider } from './context';
 
 import Home from './screens/Home';
 import AddPlant from './screens/AddPlant';
+import EditPlant from './screens/EditPlant';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Navigator initialRouteName="Home">
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Add Plant" component={AddPlant} />
+          <Stack.Screen name="Edit Plant" component={EditPlant} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppProvider>

@@ -90,9 +90,9 @@ const AddPlant = ({ navigation }) => {
     }, [newPlant])
 
     return <View>
-        <Pressable onPress={backHomeButton}>
+        {<Pressable onPress={backHomeButton}>
             <Text>Back Home</Text>
-        </Pressable>
+        </Pressable>}
 
         <View>
             <View>
