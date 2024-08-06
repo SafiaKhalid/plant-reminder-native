@@ -50,7 +50,9 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         <Pressable onPress={waterPlant}>
             <Ionicons name="water" size={40} color="blue" />
         </Pressable>}
-        
+        <Pressable onPress={() => console.log('edit')}>
+            <Text>Edit</Text>
+        </Pressable>
         {waterAlert && <Text>Plant watered!</Text>}    
     </View>
 }
