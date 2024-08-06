@@ -5,7 +5,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useGlobalContext } from "../context";
 
-const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {    
+const PlantCard = ({id, image, name, species, waterInterval, timeLeft, navigation}) => {    
     const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
     const [waterAlert, setWaterAlert] = useState(false)
@@ -14,6 +14,10 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
     const waterPlant = () => {        
         setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))   
         setWaterAlert(true)     
+    }
+
+    const editPlantButton = () => {
+        navigation.navigate('Edit Plant', {id:id})        
     }
 
     useEffect(() => {        
@@ -50,7 +54,9 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         <Pressable onPress={waterPlant}>
             <Ionicons name="water" size={40} color="blue" />
         </Pressable>}
-        
+        <Pressable onPress={editPlantButton}>
+            <Text>Edit</Text>
+        </Pressable>
         {waterAlert && <Text>Plant watered!</Text>}    
     </View>
 }
@@ -79,7 +85,7 @@ export default PlantCard
 //Water button
 
 
-//Branch - edit plantCard (make sure info copied into text inputs)
 //Branch - delete plant card (are you sure modal)
 //Branch - add image to plant card
 //Branch - order plant card list (time left to water?)
+//Branch - notifications

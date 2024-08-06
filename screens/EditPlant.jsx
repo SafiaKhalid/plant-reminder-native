@@ -1,48 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Pressable, TextInput } from 'react-native';
-import 'react-native-get-random-values';
-import { v4 as uuidv4 } from 'uuid';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import { useGlobalContext } from "../context";
 
-const AddPlant = ({ navigation }) => {  
-    const { data, setData, setItem } = useGlobalContext()       
+const EditPlant = ({route, navigation}) => {
+    const {id} = route.params
+    const { data, setData, writeStorage } = useGlobalContext()
 
-    const [plant, setPlant] = useState({
-        image: '',
-        name:'',
-        species: '',
-        waterInterval: '',
-        timeLeft: '',
-        age: {
-            years: '',
-            months: '',
-        },
-    })
+    const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
     const [alert, setAlert] = useState('')
-    const [validInput, setValidInput] = useState(false)    
-    const [newPlant, setNewPlant] = useState({
-        id: '',
-        image: '',
-        name:'',
-        species: '',
-        waterInterval: '',
-        timeLeft: '',
-        age: {
-            years: '',
-            months: '',
-        },
-    })    
+    const [dataCopy, setDataCopy] = useState(data)
 
-    const writeStorage = async newData => {
-        await setItem(JSON.stringify([...data, newData]))        
-        setData([...data, newData])
-    }
-
-    const backHomeButton = () => {
-        navigation.navigate('Home')
+    const goBack = () => {
+        navigation.goBack()
     }
 
     const verifyInput = () => {
+        console.log('verify input');
         if (!plant.name) {
             setAlert('Enter a name for your plant')
         } else if (!parseInt(plant.waterInterval)) {
@@ -53,46 +26,24 @@ const AddPlant = ({ navigation }) => {
             setAlert('Enter your plant\'s age')
         } else if (!parseInt(plant.age.months) && plant.age.months !== '') {
             setAlert('Enter your plant\'s age')
-        } else {                           
-            setNewPlant({
-                plantId: uuidv4(),
-                image: '',
-                name: plant.name,
-                species: plant.species,
-                waterInterval: plant.waterInterval,
-                timeLeft: (plant.timeLeft ? plant.timeLeft : plant.waterInterval),
-                age: plant.age
-            })               
-            setPlant({
-                image: '',
-                name:'',
-                species: '',
-                waterInterval: '',
-                timeLeft: '',
-                age: {
-                    years: '',
-                    months: '',
-                }, 
-            })                 
-            setValidInput(true)    
-            setAlert('Submitted new plant!')
+        } else {
+            setDataCopy(dataCopy.map(item => item.plantId == id ? plant : item))
+            setAlert('Youv\'e editted your plant!')
             setTimeout(() => {
                     setAlert('')
             }, 5000)
-        }        
-    }    
+        }
+    }
 
-    useEffect(() => {
-        if (validInput == true) {                            
-            writeStorage(newPlant)
-            setValidInput(false)                       
-        }        
-    }, [newPlant])
+    useEffect(() => {        
+        setData(dataCopy)
+        writeStorage(dataCopy)
+    }, [dataCopy])
 
-    return <View>
-        {<Pressable onPress={backHomeButton}>
-            <Text>Back Home</Text>
-        </Pressable>}
+    return <View>             
+        <Pressable onPress={goBack}>
+            <Text>Back</Text>
+        </Pressable>
 
         <View>
             <View>
@@ -100,7 +51,7 @@ const AddPlant = ({ navigation }) => {
                 <TextInput
                     onChangeText={(text) => setPlant({...plant, name:text})}
                     value={plant.name}
-                    placeholder={'Name'}
+                    placeholder={(plant.name=='' ? 'Name' : plant.name)}
                     keyboardType="default"
                 />            
             </View>
@@ -109,7 +60,7 @@ const AddPlant = ({ navigation }) => {
                 <TextInput
                     onChangeText={(text) => setPlant({...plant, species:text})}
                     value={plant.species}
-                    placeholder={'Species'}
+                    placeholder={(plant.species=='' ? 'Species' : plant.species)}
                     keyboardType="default"
                 /> 
             </View>
@@ -119,7 +70,7 @@ const AddPlant = ({ navigation }) => {
                 <TextInput
                     onChangeText={(text) => setPlant({...plant, waterInterval:text})}
                     value={plant.waterInterval}
-                    placeholder={'Water interval'}
+                    placeholder={(plant.waterInterval=='' ? 'Water Interval' : plant.waterInterval)}
                     keyboardType="number-pad"
                 />
                 <Text>days</Text>            
@@ -129,35 +80,35 @@ const AddPlant = ({ navigation }) => {
                 <TextInput
                     onChangeText={(text) => setPlant({...plant, timeLeft:text})}
                     value={plant.timeLeft}
-                    placeholder={'Time left'}
+                    placeholder={(plant.timeLeft=='' ? 'Time left' : plant.timeLeft)}
                     keyboardType="number-pad"
                 />            
             </View>
             <View>
                 <Text>Age (optional): </Text> 
                 <TextInput
-                    onChangeText={(text) => setPlant({...plant, age:{...plant.age, years:text}})}
+                    onChangeText={(text) => setPlant({...plant, age:{...plant.age, years:text}})} 
                     value={plant.age.years}
-                    placeholder={'Years'}
+                    placeholder={(plant.age.years=='' ? 'Years' : plant.age.years)}
                     keyboardType="number-pad"
                 /> 
                 <Text>years</Text>
                 <TextInput
                     onChangeText={(text) => setPlant({...plant, age:{...plant.age, months:text}})}
                     value={plant.age.months}
-                    placeholder={'Months'}
+                    placeholder={(plant.age.months=='' ? 'Months' : plant.age.months)}
                     keyboardType="number-pad"
                 />
                 <Text>months</Text>           
             </View>
             
             <Pressable onPress={verifyInput}>
-                <Text>Add Plant</Text>
+                <Text>Confirm</Text>
             </Pressable>
 
             <Text>{alert}</Text>
-        </View>
+        </View>                            
     </View>
 }
 
-export default AddPlant
+export default EditPlant
