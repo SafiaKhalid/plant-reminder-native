@@ -7,14 +7,29 @@ const EditPlant = ({route, navigation}) => {
     const { data } = useGlobalContext()
 
     const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
+    const [alert, setAlert] = useState('')
 
     console.log('plant: ', plant);
     
     console.log('id: ', id);
-    
 
     const goBack = () => {
         navigation.goBack()
+    }
+
+    const verifyInput = () => {
+        console.log('verify input');
+        if (!plant.name) {
+            setAlert('Enter a name for your plant')
+        } else if (!parseInt(plant.waterInterval)) {
+            setAlert('Enter how often you want your plant to be watered')
+        } else if (!parseInt(plant.timeLeft) && plant.timeLeft !== '') {
+            setAlert('Enter how long left to next water your plant')
+        } else if (!parseInt(plant.age.years) && plant.age.years !== '') {
+            setAlert('Enter your plant\'s age')
+        } else if (!parseInt(plant.age.months) && plant.age.months !== '') {
+            setAlert('Enter your plant\'s age')
+        }
     }
 
     return <View>             
@@ -26,16 +41,16 @@ const EditPlant = ({route, navigation}) => {
             <View>
                 <Text>Name: </Text>
                 <TextInput
-                    onChangeText={/* (text) => setPlant({...plant, name:text}) */ () => console.log('textChange')}
+                    onChangeText={(text) => setPlant({...plant, name:text})}
                     value={plant.name}
-                    placeholder={plant.name}
+                    placeholder={(plant.name=='' ? 'Name' : plant.name)}
                     keyboardType="default"
                 />            
             </View>
             <View>
                 <Text>Species (optional): </Text>   
                 <TextInput
-                    onChangeText={/* (text) => setPlant({...plant, species:text}) */ () => console.log('textChange')}
+                    onChangeText={(text) => setPlant({...plant, species:text})}
                     value={plant.species}
                     placeholder={(plant.species=='' ? 'Species' : plant.species)}
                     keyboardType="default"
@@ -45,9 +60,9 @@ const EditPlant = ({route, navigation}) => {
                 <Text>Water Interval: </Text>            
                 <Text>Every</Text>            
                 <TextInput
-                    onChangeText={/* (text) => setPlant({...plant, waterInterval:text}) */ () => console.log('textChange')}
+                    onChangeText={(text) => setPlant({...plant, waterInterval:text})}
                     value={plant.waterInterval}
-                    placeholder={plant.waterInterval}
+                    placeholder={(plant.waterInterval=='' ? 'Water Interval' : plant.waterInterval)}
                     keyboardType="number-pad"
                 />
                 <Text>days</Text>            
@@ -55,7 +70,7 @@ const EditPlant = ({route, navigation}) => {
             <View>
                 <Text>Time Left (optional): </Text>
                 <TextInput
-                    onChangeText={/* (text) => setPlant({...plant, timeLeft:text}) */ () => console.log('textChange')}
+                    onChangeText={(text) => setPlant({...plant, timeLeft:text})}
                     value={plant.timeLeft}
                     placeholder={(plant.timeLeft=='' ? 'Time left' : plant.timeLeft)}
                     keyboardType="number-pad"
@@ -64,14 +79,14 @@ const EditPlant = ({route, navigation}) => {
             <View>
                 <Text>Age (optional): </Text> 
                 <TextInput
-                    onChangeText={/* (text) => setPlant({...plant, age:{...plant.age, years:text}}) */ () => console.log('textChange')} 
+                    onChangeText={(text) => setPlant({...plant, age:{...plant.age, years:text}})} 
                     value={plant.age.years}
                     placeholder={(plant.age.years=='' ? 'Years' : plant.age.years)}
                     keyboardType="number-pad"
                 /> 
                 <Text>years</Text>
                 <TextInput
-                    onChangeText={/* (text) => setPlant({...plant, age:{...plant.age, months:text}}) */ () => console.log('textChange')}
+                    onChangeText={(text) => setPlant({...plant, age:{...plant.age, months:text}})}
                     value={plant.age.months}
                     placeholder={(plant.age.months=='' ? 'Months' : plant.age.months)}
                     keyboardType="number-pad"
@@ -79,8 +94,8 @@ const EditPlant = ({route, navigation}) => {
                 <Text>months</Text>           
             </View>
             
-            <Pressable onPress={() => console.log('submittd')}>
-                <Text>Add Plant</Text>
+            <Pressable onPress={verifyInput}>
+                <Text>Confirm</Text>
             </Pressable>
 
             <Text>{alert}</Text>
