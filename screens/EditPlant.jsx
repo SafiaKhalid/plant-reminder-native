@@ -10,10 +10,6 @@ const EditPlant = ({route, navigation}) => {
     const [alert, setAlert] = useState('')
     const [dataCopy, setDataCopy] = useState(data)
 
-    console.log('plant: ', plant);
-    
-    console.log('id: ', id);
-
     const goBack = () => {
         navigation.goBack()
     }
@@ -39,8 +35,7 @@ const EditPlant = ({route, navigation}) => {
         }
     }
 
-    useEffect(() => {
-        console.log('dataCopy: ',dataCopy);
+    useEffect(() => {        
         setData(dataCopy)
         writeStorage(dataCopy)
     }, [dataCopy])
