@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native'
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useGlobalContext } from "../context";
 
@@ -8,6 +9,7 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
     const { data, setData, writeStorage } = useGlobalContext()    
     const [dataCopy, setDataCopy] = useState(data)
     const [waterAlert, setWaterAlert] = useState(false)
+    const [plantIcon, setPlantIcon] = useState('')
 
     const waterPlant = () => {        
         setDataCopy(dataCopy.map(item => item.plantId == id ? {...item, timeLeft:waterInterval} : item))   
@@ -27,11 +29,22 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         }
     }, [waterAlert])
 
+    useEffect(() => {
+        if (timeLeft===waterInterval) {
+            setPlantIcon(<FontAwesome6 name="face-grin-squint" size={24} color="darkgreen" />)
+        } else if (timeLeft == 0) {
+            setPlantIcon(<FontAwesome6 name="face-tired" size={24} color="red" />)
+        } else {
+            setPlantIcon(<FontAwesome6 name="face-laugh" size={24} color="yellowgreen" />)
+        }
+    }, [timeLeft])
+
     return <View>
         {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
         <Text>Name: {name}</Text>
         {species !== '' && <Text>Species: {species}</Text>}
         <Text>Time left: {timeLeft}</Text>
+        {plantIcon}
         {timeLeft===waterInterval ? 
         <Ionicons name="water" size={40} color="grey" /> : 
         <Pressable onPress={waterPlant}>
@@ -66,8 +79,6 @@ export default PlantCard
 //Water button
 
 
-//Next branch - display message when list empty on Home screen
-//Branch - icons reflecting timeLeft (happy, sad, angry etc?)
 //Branch - edit plantCard (make sure info copied into text inputs)
 //Branch - delete plant card (are you sure modal)
 //Branch - add image to plant card
