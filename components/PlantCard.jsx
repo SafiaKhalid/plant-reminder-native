@@ -29,12 +29,23 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft}) => {
         }
     }, [waterAlert])
 
+    useEffect(() => {
+        console.log('icon');
+        if (timeLeft===waterInterval) {
+            setPlantIcon(<FontAwesome6 name="face-grin-squint" size={24} color="darkgreen" />)
+        } else if (timeLeft == 0) {
+            setPlantIcon(<FontAwesome6 name="face-tired" size={24} color="red" />)
+        } else {
+            setPlantIcon(<FontAwesome6 name="face-laugh" size={24} color="yellowgreen" />)
+        }
+    }, [timeLeft])
+
     return <View>
         {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
         <Text>Name: {name}</Text>
         {species !== '' && <Text>Species: {species}</Text>}
         <Text>Time left: {timeLeft}</Text>
-        <FontAwesome6 name="face-grin-squint" size={24} color="black" />
+        {plantIcon}
         {timeLeft===waterInterval ? 
         <Ionicons name="water" size={40} color="grey" /> : 
         <Pressable onPress={waterPlant}>
