@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, Modal } from 'react-native';
 import { useGlobalContext } from "../context";
 
 const EditPlant = ({route, navigation}) => {
@@ -104,6 +104,10 @@ const EditPlant = ({route, navigation}) => {
             
             <Pressable onPress={verifyInput}>
                 <Text>Confirm</Text>
+            </Pressable>
+            
+            <Pressable onPress={() => console.log('Delete plant?')}>
+                <Text>Delete</Text>
             </Pressable>
 
             <Text>{alert}</Text>
