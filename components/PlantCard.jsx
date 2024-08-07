@@ -89,3 +89,4 @@ export default PlantCard
 //Branch - add image to plant card
 //Branch - order plant card list (time left to water?)
 //Branch - notifications
+//Branch - accessibility (modal alert, hover(?) component description)

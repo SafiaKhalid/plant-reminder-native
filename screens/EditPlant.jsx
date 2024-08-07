@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable, Modal, StyleSheet } from 'react-native';
 import { useGlobalContext } from "../context";
 
 const EditPlant = ({route, navigation}) => {
     const {id} = route.params
     const { data, setData, writeStorage } = useGlobalContext()
 
+    const [modalVisible, setModalVisible] = useState(false)
     const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
     const [alert, setAlert] = useState('')
     const [dataCopy, setDataCopy] = useState(data)
 
     const goBack = () => {
-        navigation.goBack()
+        navigation.goBack()        
     }
 
     const verifyInput = () => {
@@ -35,12 +36,32 @@ const EditPlant = ({route, navigation}) => {
         }
     }
 
+    const deleteButton = () => {        
+        setDataCopy(dataCopy.filter((item) => item.plantId !== id))
+        setModalVisible(false)
+        navigation.navigate('Home')
+    }
+
     useEffect(() => {        
         setData(dataCopy)
         writeStorage(dataCopy)
     }, [dataCopy])
 
-    return <View>             
+    return <View style={styles.container}>    
+        <Modal transparent={true} visible={modalVisible} >
+            <View style={styles.container}>
+                <View style={styles.modalView}>
+                    <Text>Are you sure you want to delete your plant?</Text>
+                    <Pressable onPress={deleteButton}>
+                        <Text>Yes</Text>
+                    </Pressable>
+                    <Pressable onPress={() => setModalVisible(false)}>
+                        <Text>Back</Text>
+                    </Pressable>
+                </View>                
+            </View>
+        </Modal>         
+        
         <Pressable onPress={goBack}>
             <Text>Back</Text>
         </Pressable>
@@ -105,10 +126,28 @@ const EditPlant = ({route, navigation}) => {
             <Pressable onPress={verifyInput}>
                 <Text>Confirm</Text>
             </Pressable>
+            
+            <Pressable onPress={() => setModalVisible(true)}>
+                <Text>Delete</Text>
+            </Pressable>
 
             <Text>{alert}</Text>
         </View>                            
     </View>
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalView: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'red',
+        alignItems: 'center',
+    }
+})
 
 export default EditPlant
