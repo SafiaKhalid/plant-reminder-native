@@ -51,7 +51,7 @@ const EditPlant = ({route, navigation}) => {
         <Modal transparent={true} visible={modalVisible} >
             <View style={styles.container}>
                 <View style={styles.modalView}>
-                    <Text>Modal</Text>
+                    <Text>Are you sure you want to delete your plant?</Text>
                     <Pressable onPress={deleteButton}>
                         <Text>Yes</Text>
                     </Pressable>
