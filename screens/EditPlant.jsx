@@ -36,6 +36,10 @@ const EditPlant = ({route, navigation}) => {
         }
     }
 
+    const deleteButton = () => {        
+        setDataCopy(dataCopy.filter((item) => item.plantId !== id))
+    }
+
     useEffect(() => {        
         setData(dataCopy)
         writeStorage(dataCopy)
@@ -46,7 +50,7 @@ const EditPlant = ({route, navigation}) => {
             <View style={styles.container}>
                 <View style={styles.modalView}>
                     <Text>Modal</Text>
-                    <Pressable onPress={() => console.log('Yes')}>
+                    <Pressable onPress={deleteButton}>
                         <Text>Yes</Text>
                     </Pressable>
                     <Pressable onPress={() => setModalVisible(false)}>
