@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Pressable, Modal } from 'react-native';
+import { View, Text, TextInput, Pressable, Modal, StyleSheet } from 'react-native';
 import { useGlobalContext } from "../context";
 
 const EditPlant = ({route, navigation}) => {
     const {id} = route.params
     const { data, setData, writeStorage } = useGlobalContext()
 
+    const [modalVisible, setModalVisible] = useState(false)
     const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
     const [alert, setAlert] = useState('')
     const [dataCopy, setDataCopy] = useState(data)
@@ -40,7 +41,21 @@ const EditPlant = ({route, navigation}) => {
         writeStorage(dataCopy)
     }, [dataCopy])
 
-    return <View>             
+    return <View style={styles.container}>    
+        <Modal transparent={true} visible={modalVisible} >
+            <View style={styles.container}>
+                <View style={styles.modalView}>
+                    <Text>Modal</Text>
+                    <Pressable onPress={() => console.log('Yes')}>
+                        <Text>Yes</Text>
+                    </Pressable>
+                    <Pressable onPress={() => setModalVisible(false)}>
+                        <Text>Back</Text>
+                    </Pressable>
+                </View>                
+            </View>
+        </Modal>         
+        
         <Pressable onPress={goBack}>
             <Text>Back</Text>
         </Pressable>
@@ -106,7 +121,7 @@ const EditPlant = ({route, navigation}) => {
                 <Text>Confirm</Text>
             </Pressable>
             
-            <Pressable onPress={() => console.log('Delete plant?')}>
+            <Pressable onPress={() => setModalVisible(true)}>
                 <Text>Delete</Text>
             </Pressable>
 
@@ -114,5 +129,19 @@ const EditPlant = ({route, navigation}) => {
         </View>                            
     </View>
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalView: {
+        width: 100,
+        height: 100,
+        backgroundColor: 'red',
+        alignItems: 'center',
+    }
+})
 
 export default EditPlant
