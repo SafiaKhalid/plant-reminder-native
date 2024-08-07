@@ -12,7 +12,7 @@ const EditPlant = ({route, navigation}) => {
     const [dataCopy, setDataCopy] = useState(data)
 
     const goBack = () => {
-        navigation.goBack()
+        navigation.goBack()        
     }
 
     const verifyInput = () => {
@@ -38,6 +38,8 @@ const EditPlant = ({route, navigation}) => {
 
     const deleteButton = () => {        
         setDataCopy(dataCopy.filter((item) => item.plantId !== id))
+        setModalVisible(false)
+        navigation.navigate('Home')
     }
 
     useEffect(() => {        
