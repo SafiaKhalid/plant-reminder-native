@@ -3,6 +3,7 @@ import { View, Text, Pressable, TextInput, StatusBar, Image, StyleSheet } from '
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import * as DocumentPicker from 'expo-document-picker';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useGlobalContext } from "../context";
 
 const AddPlant = ({ navigation }) => {  
@@ -58,7 +59,7 @@ const AddPlant = ({ navigation }) => {
         } else {                           
             setNewPlant({
                 plantId: uuidv4(),
-                image: '',
+                image: (fileResponse ? fileResponse : ''),
                 name: plant.name,
                 species: plant.species,
                 waterInterval: plant.waterInterval,
@@ -125,25 +126,15 @@ const AddPlant = ({ navigation }) => {
 
     return <View>
         <StatusBar />
-        {/* {fileResponse.map((file, index) => {
-            <Text
-                key={index.toString()}
-                numberOfLines={1}
-            >
-                {file?.url}
-            </Text>
-        })} */}
-        <Pressable onPress={handleDocumentSelection}>
-            <Text>Select</Text>            
-        </Pressable>
-
-        <Text>File name: {fileResponse}</Text>
-        {fileResponse && <Image style={styles.image} source={{uri: fileResponse}} />}
-       {/*  {<Pressable onPress={backHomeButton}>
-            <Text>Back Home</Text>
-        </Pressable>}
 
         <View>
+            <View>
+                <Text>Image (optional)</Text>
+                <Pressable onPress={handleDocumentSelection}>
+                    <Text>Select Image:</Text>            
+                </Pressable>
+                {fileResponse ? <Image style={styles.image} source={{uri: fileResponse}} /> : <FontAwesome5 name="seedling" size={60} color="green" />}
+            </View>
             <View>
                 <Text>Name: </Text>
                 <TextInput
@@ -205,7 +196,7 @@ const AddPlant = ({ navigation }) => {
             </Pressable>
 
             <Text>{alert}</Text>
-        </View> */}
+        </View>
     </View>
 }
 
