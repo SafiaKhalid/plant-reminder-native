@@ -47,7 +47,7 @@ const PlantCard = ({id, image, name, species, waterInterval, timeLeft, navigatio
         {image === '' ? <View style={styles.image}><FontAwesome5 name="seedling" size={60} color="green" /></View> : <Image source={{uri: image}} style={styles.image} /> }        
         <Text>Name: {name}</Text>
         {species !== '' && <Text>Species: {species}</Text>}
-        <Text>Time left: {timeLeft}</Text>
+        <Text>Time left: {timeLeft} days</Text>
         {plantIcon}
         {timeLeft===waterInterval ? 
         <Ionicons name="water" size={40} color="grey" /> : 
@@ -85,7 +85,6 @@ export default PlantCard
 //Water button
 
 
-//Branch - delete plant card (are you sure modal, add to edit plant screen)
 //Branch - add image to plant card
 //Branch - order plant card list (time left to water?)
 //Branch - notifications

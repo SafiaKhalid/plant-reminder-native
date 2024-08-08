@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, Pressable, TextInput } from 'react-native';
+import { View, Text, Pressable, TextInput, Image, StyleSheet } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
+import * as DocumentPicker from 'expo-document-picker';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useGlobalContext } from "../context";
 
 const AddPlant = ({ navigation }) => {  
@@ -32,6 +34,7 @@ const AddPlant = ({ navigation }) => {
             months: '',
         },
     })    
+    const [fileResponse, setFileResponse] = useState()
 
     const writeStorage = async newData => {
         await setItem(JSON.stringify([...data, newData]))        
@@ -56,7 +59,7 @@ const AddPlant = ({ navigation }) => {
         } else {                           
             setNewPlant({
                 plantId: uuidv4(),
-                image: '',
+                image: (fileResponse ? fileResponse : ''),
                 name: plant.name,
                 species: plant.species,
                 waterInterval: plant.waterInterval,
@@ -89,12 +92,29 @@ const AddPlant = ({ navigation }) => {
         }        
     }, [newPlant])
 
-    return <View>
-        {<Pressable onPress={backHomeButton}>
-            <Text>Back Home</Text>
-        </Pressable>}
+    const handleDocumentSelection = async () => {
+        try {
+            const documentResponse = await DocumentPicker.getDocumentAsync({
+                type: 'image/*',
+            })
 
+            if (documentResponse !== undefined) {
+                setFileResponse(documentResponse.assets[0].uri)                                                       
+            }           
+        } catch (e) {
+            console.log(e)            
+        }
+    }    
+
+    return <View>        
         <View>
+            <View>
+                <Text>Image (optional)</Text>
+                <Pressable onPress={handleDocumentSelection}>
+                    <Text>Select Image:</Text>            
+                </Pressable>
+                {fileResponse ? <Image style={styles.image} source={{uri: fileResponse}} /> : <FontAwesome5 name="seedling" size={60} color="green" />}
+            </View>
             <View>
                 <Text>Name: </Text>
                 <TextInput
@@ -159,5 +179,12 @@ const AddPlant = ({ navigation }) => {
         </View>
     </View>
 }
+
+const styles = StyleSheet.create({
+    image:  {
+        width: 50,
+        height: 50
+    },
+})
 
 export default AddPlant
