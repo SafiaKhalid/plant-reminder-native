@@ -52,12 +52,18 @@ const EditPlant = ({route, navigation}) => {
             })
 
             if (documentResponse !== undefined) {
-                setFileResponse(documentResponse.assets[0].uri)                                                       
+                setFileResponse(documentResponse.assets[0].uri)                    
             }           
         } catch (e) {
             console.log(e)            
         }
     }  
+
+    useEffect(() =>{
+        if (fileResponse) {
+            setPlant({...plant, image:fileResponse})                                                   
+        }        
+    }, [fileResponse])
 
     useEffect(() => {        
         setData(dataCopy)
