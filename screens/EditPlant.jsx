@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Pressable, Modal, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Pressable, Modal, StyleSheet, Image } from 'react-native';
+import * as DocumentPicker from 'expo-document-picker';
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useGlobalContext } from "../context";
 
 const EditPlant = ({route, navigation}) => {
@@ -10,6 +12,7 @@ const EditPlant = ({route, navigation}) => {
     const [plant, setPlant] = useState(data[data.findIndex(item => item.plantId === id)])
     const [alert, setAlert] = useState('')
     const [dataCopy, setDataCopy] = useState(data)
+    const [fileResponse, setFileResponse] = useState()
 
     const goBack = () => {
         navigation.goBack()        
@@ -42,6 +45,26 @@ const EditPlant = ({route, navigation}) => {
         navigation.navigate('Home')
     }
 
+    const handleDocumentSelection = async () => {
+        try {
+            const documentResponse = await DocumentPicker.getDocumentAsync({
+                type: 'image/*',
+            })
+
+            if (documentResponse !== undefined) {
+                setFileResponse(documentResponse.assets[0].uri)                    
+            }           
+        } catch (e) {
+            console.log(e)            
+        }
+    }  
+
+    useEffect(() =>{
+        if (fileResponse) {
+            setPlant({...plant, image:fileResponse})                                                   
+        }        
+    }, [fileResponse])
+
     useEffect(() => {        
         setData(dataCopy)
         writeStorage(dataCopy)
@@ -67,6 +90,14 @@ const EditPlant = ({route, navigation}) => {
         </Pressable>
 
         <View>
+            <View>
+                <Text>Image (optional)</Text>
+                <Pressable onPress={handleDocumentSelection}>
+                    <Text>Select Image:</Text>            
+                </Pressable>
+                {fileResponse ? <Image style={styles.image} source={{uri: fileResponse}} /> : <FontAwesome5 name="seedling" size={60} color="green" />}
+            </View>
+
             <View>
                 <Text>Name: </Text>
                 <TextInput
@@ -147,7 +178,11 @@ const styles = StyleSheet.create({
         height: 100,
         backgroundColor: 'red',
         alignItems: 'center',
-    }
+    },
+    image:  {
+        width: 50,
+        height: 50
+    },
 })
 
 export default EditPlant
