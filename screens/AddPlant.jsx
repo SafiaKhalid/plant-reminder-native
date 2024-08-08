@@ -105,7 +105,9 @@ const AddPlant = ({ navigation }) => {
 
     const handleDocumentSelection = async () => {
         try {
-            const documentResponse = await DocumentPicker.getDocumentAsync({})
+            const documentResponse = await DocumentPicker.getDocumentAsync({
+                type: 'image/*',
+            })
             if (documentResponse !== undefined) {
                 setFileResponse(documentResponse.assets[0].uri)                
                 console.log('document response : ', documentResponse.assets[0].uri)                         
