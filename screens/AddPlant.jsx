@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, Pressable, TextInput, StatusBar, Image, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from "react";
+import { View, Text, Pressable, TextInput, Image, StyleSheet } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import * as DocumentPicker from 'expo-document-picker';
@@ -92,41 +92,21 @@ const AddPlant = ({ navigation }) => {
         }        
     }, [newPlant])
 
-    /* const handleDocumentSelection = useCallback(async () => {
-        try {
-            const response = await DocumentPicker.pick({
-                presentationStyle: 'fullScreen',
-            })
-            setFileResponse(response)
-            console.log('Fetched');            
-        } catch (e) {
-            console.error(e)
-        }
-    }, []) */
-
     const handleDocumentSelection = async () => {
         try {
             const documentResponse = await DocumentPicker.getDocumentAsync({
                 type: 'image/*',
             })
+
             if (documentResponse !== undefined) {
-                setFileResponse(documentResponse.assets[0].uri)                
-                console.log('document response : ', documentResponse.assets[0].uri)                         
-            } else {
-                console.log('Not fetched')                
-            }            
+                setFileResponse(documentResponse.assets[0].uri)                                                       
+            }           
         } catch (e) {
             console.log(e)            
         }
-    }
+    }    
 
-    useEffect(() => {
-        console.log(fileResponse)        
-    }, [fileResponse])
-
-    return <View>
-        <StatusBar />
-
+    return <View>        
         <View>
             <View>
                 <Text>Image (optional)</Text>
