@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { View, Text, Pressable, TextInput, StatusBar } from 'react-native';
+import { View, Text, Pressable, TextInput, StatusBar, Image, StyleSheet } from 'react-native';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import * as DocumentPicker from 'expo-document-picker';
@@ -134,9 +134,11 @@ const AddPlant = ({ navigation }) => {
             </Text>
         })} */}
         <Pressable onPress={handleDocumentSelection}>
-            <Text>Select</Text>
-            <Text>File name: {fileResponse}</Text>
+            <Text>Select</Text>            
         </Pressable>
+
+        <Text>File name: {fileResponse}</Text>
+        {fileResponse && <Image style={styles.image} source={{uri: fileResponse}} />}
        {/*  {<Pressable onPress={backHomeButton}>
             <Text>Back Home</Text>
         </Pressable>}
@@ -206,5 +208,12 @@ const AddPlant = ({ navigation }) => {
         </View> */}
     </View>
 }
+
+const styles = StyleSheet.create({
+    image:  {
+        width: 50,
+        height: 50
+    },
+})
 
 export default AddPlant
